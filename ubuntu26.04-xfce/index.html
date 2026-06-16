@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ubuntu Desktop</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .container {
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #e94560, #0f3460);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    p {
+      font-size: 1.1rem;
+      color: #a0a0b0;
+      margin-bottom: 30px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 40px;
+      background: #e94560;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+    }
+    .btn:hover {
+      background: #d63851;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(233, 69, 96, 0.6);
+    }
+    .features {
+      display: flex;
+      gap: 30px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .feature {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 12px;
+      width: 200px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .feature h3 { margin-bottom: 8px; color: #e94560; }
+    .feature p { font-size: 0.9rem; margin-bottom: 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ubuntu Desktop</h1>
+    <p>云端 Ubuntu 桌面环境</p>
+    <a class="btn" href="/.console/">进入桌面</a>
+    <div class="features">
+      <div class="feature">
+        <h3>Ubuntu XFCE</h3>
+        <p>轻量级桌面环境，流畅体验</p>
+      </div>
+      <div class="feature">
+        <h3>Web 访问</h3>
+        <p>浏览器即可使用，无需安装</p>
+      </div>
+      <div class="feature">
+        <h3>完整终端</h3>
+        <p>内置完整 Linux 命令行环境</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
