@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ubuntu Desktop · 云端工作站</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --accent: #e94560;
+      --accent-2: #0f3460;
+      --bg-1: #0f0c29;
+      --bg-2: #302b63;
+      --bg-3: #24243e;
+      --glass: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --text: #f5f5f7;
+      --text-muted: #a0a0b5;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+                   'Microsoft YaHei', Roboto, sans-serif;
+      background: linear-gradient(-45deg, var(--bg-1), var(--bg-2), var(--bg-3), var(--bg-1));
+      background-size: 400% 400%;
+      animation: gradientFlow 18s ease infinite;
+      min-height: 100vh;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientFlow {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 装饰光斑 */
+    body::before, body::after {
+      content: '';
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.35;
+      z-index: 0;
+      pointer-events: none;
+    }
+    body::before {
+      width: 480px; height: 480px;
+      background: var(--accent);
+      top: -120px; left: -120px;
+      animation: float 12s ease-in-out infinite;
+    }
+    body::after {
+      width: 420px; height: 420px;
+      background: #4e54c8;
+      bottom: -120px; right: -120px;
+      animation: float 14s ease-in-out infinite reverse;
+    }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50%      { transform: translate(40px, 30px); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      width: 100%;
+      text-align: center;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      backdrop-filter: blur(10px);
+    }
+    .badge .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #2ecc71;
+      box-shadow: 0 0 8px #2ecc71;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.4; }
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 800;
+      margin-bottom: 14px;
+      letter-spacing: -1px;
+      background: linear-gradient(90deg, #fff 0%, var(--accent) 60%, #4e54c8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 38px;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #c73650);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(233, 69, 96, 0.45);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px rgba(233, 69, 96, 0.6);
+    }
+    .btn-ghost {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+    }
+    .btn-ghost:hover {
+      transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .feature {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 28px 22px;
+      text-align: left;
+      backdrop-filter: blur(14px);
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent, rgba(255,255,255,0.04));
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .feature:hover {
+      transform: translateY(-6px);
+      border-color: rgba(233, 69, 96, 0.4);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    }
+    .feature:hover::before { opacity: 1; }
+
+    .feature .icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, rgba(233,69,96,0.2), rgba(78,84,200,0.2));
+      border: 1px solid var(--glass-border);
+    }
+    .feature h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .feature p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .service {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      backdrop-filter: blur(10px);
+      text-align: left;
+      transition: all 0.3s ease;
+    }
+    .service:hover {
+      border-color: rgba(78, 84, 200, 0.5);
+      transform: translateX(4px);
+    }
+    .service .s-icon {
+      font-size: 1.4rem;
+      width: 40px;
+      text-align: center;
+    }
+    .service .s-info { flex: 1; }
+    .service .s-name {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .service .s-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .service .s-port {
+      font-size: 0.78rem;
+      font-family: 'SF Mono', Monaco, monospace;
+      color: var(--accent);
+      background: rgba(233, 69, 96, 0.12);
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .actions { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="badge"><span class="dot"></span> 系统运行中 · 在线</div>
+
+    <h1>Ubuntu Cloud Desktop</h1>
+    <p class="subtitle">云端 Ubuntu XFCE 工作站 · 浏览器即开即用<br>
+       集成 EasyTier 组网与 SOCKS5 代理，构建你的私有云上开发环境</p>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="/.console/">
+        <span>🚀</span> 进入桌面
+      </a>
+      <a class="btn btn-ghost" href="/.easytier/">
+        <span>🌐</span> EasyTier 面板
+      </a>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="icon">🖥️</div>
+        <h3>Ubuntu XFCE</h3>
+        <p>轻量级桌面环境，流畅的图形化操作体验，开箱即用</p>
+      </div>
+      <div class="feature">
+        <div class="icon">⌨️</div>
+        <h3>中文输入法</h3>
+        <p>内置 Fcitx5 拼音 + 五笔输入法，中文字体完整支持</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔧</div>
+        <h3>开发工具链</h3>
+        <p>预装 Node.js 24、Golang 1.24、Docker CLI 与 docker-compose</p>
+      </div>
+      <div class="feature">
+        <div class="icon">📡</div>
+        <h3>组网代理</h3>
+        <p>EasyTier P2P 组网 + Dante SOCKS5 代理，灵活的网络穿透方案</p>
+      </div>
+    </div>
+
+    <div class="services">
+      <div class="service">
+        <div class="s-icon">🌐</div>
+        <div class="s-info">
+          <div class="s-name">Web 桌面</div>
+          <div class="s-desc">KasmVNC 远程桌面</div>
+        </div>
+        <div class="s-port">3000</div>
+      </div>
+      <div class="service">
+        <div class="s-icon">🔗</div>
+        <div class="s-info">
+          <div class="s-name">EasyTier</div>
+          <div class="s-desc">P2P 虚拟组网</div>
+        </div>
+        <div class="s-port">8443</div>
+      </div>
+      <div class="service">
+        <div class="s-icon">🧦</div>
+        <div class="s-info">
+          <div class="s-name">Dante SOCKS5</div>
+          <div class="s-desc">代理服务器</div>
+        </div>
+        <div class="s-port">1182</div>
+      </div>
+      <div class="service">
+        <div class="s-icon">📡</div>
+        <div class="s-info">
+          <div class="s-name">Nginx 入口</div>
+          <div class="s-desc">统一访问网关</div>
+        </div>
+        <div class="s-port">7860</div>
+      </div>
+    </div>
+
+    <footer>
+      Powered by <a href="https://github.com/linuxserver/docker-webtop" target="_blank" rel="noopener">linuxserver/webtop</a>
+      · 基于 Ubuntu 26.04 LTS · XFCE
+    </footer>
+  </div>
+</body>
+</html>

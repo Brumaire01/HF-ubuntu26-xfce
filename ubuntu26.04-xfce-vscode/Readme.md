@@ -43,6 +43,7 @@ docker run -d --name ubuntu-web -p 7860:7860 -e PUID=0 -e PGID=0 -e TZ=Asia/Shan
 > - `--shm-size=4gb`：增大共享内存，保证 Chromium/Firefox 等应用正常运行
 > - `CUSTOM_USER`：Web 认证自定义用户名（可留空，留空则无认证）
 > - `PASSWORD`：Web 认证自定义密码（可留空，留空则无认证）
+> - `NETWORK_SECRET`：easytier认证自定义密码（可留空，留空则默认为 admin@123）
 
 ### 3. 访问
 

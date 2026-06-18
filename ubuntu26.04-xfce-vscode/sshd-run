@@ -1,0 +1,12 @@
+#!/command/with-contenv bash
+# SSH 服务自动启动
+echo "=== Starting sshd ==="
+
+# 生成 host keys（若不存在）
+ssh-keygen -A 2>/dev/null
+
+# 设置 root 密码（支持 env 自定义，默认 root）
+echo "root:${ROOT_PASSWORD:-root}" | chpasswd
+
+# 前台运行 sshd（-D 前台, -e 输出日志到 stderr）
+exec /usr/sbin/sshd -D -e

@@ -1,0 +1,16 @@
+#!/command/with-contenv bash
+# EasyTier 自动启动服务
+echo "=== Starting easytier-core ==="
+easytier-core \
+  -i 10.10.1.1/24 \
+  --hostname Server \
+  --enable-kcp-proxy \
+  --use-smoltcp \
+  --network-name easy-networker \
+  --network-secret "${NETWORK_SECRET}" \
+  --proxy-networks 0.0.0.0/0 \
+  --no-tun \
+  --listeners ws://0.0.0.0:8443 &
+
+echo "=== Starting dante-server ==="
+exec danted -f /etc/danted.conf

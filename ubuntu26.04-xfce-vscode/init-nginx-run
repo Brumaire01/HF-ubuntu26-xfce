@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bash
 
-# ===== 以下是 webtop 原始 init-nginx 逻辑 =====
+# ===== 以下是 Web-UI 原始 init-nginx 逻辑 =====
 
 # nginx Path
 NGINX_CONFIG=/etc/nginx/sites-available/default

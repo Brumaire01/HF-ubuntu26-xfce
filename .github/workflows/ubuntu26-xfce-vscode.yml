@@ -1,4 +1,4 @@
-name: Build and Push Ubuntu-xfce Docker Image
+name: Build and Push Ubuntu-xfce-vscode Docker Image
 
 on:
   workflow_dispatch:
@@ -32,10 +32,10 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./ubuntu26.04-xfce
+          context: ./ubuntu26.04-xfce-vscode
           push: true
           tags: |
-            ghcr.io/${{ steps.lower-repo.outputs.repository }}/ubuntu26-xfce:latest
+            ghcr.io/${{ steps.lower-repo.outputs.repository }}/ubuntu26-xfce-vscode:latest
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.description=Ubuntu-xfce Docker Image
